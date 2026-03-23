@@ -1,0 +1,424 @@
+/* ============================================================
+   King David — Cinematic Animation Stylesheet
+   Dark, dramatic, gold-accented cinematic presentation
+   ============================================================ */
+
+/* ── CSS Variables (overridden per scene by JS) ─────────────── */
+:root {
+  --sky: #1a0a2e;
+  --ground: #2d1a0a;
+  --accent: #c8860a;
+  --text-primary: #f5e6c8;
+  --text-secondary: #c8a870;
+  --gold: #ffd700;
+  --panel-bg: rgba(0, 0, 0, 0.72);
+  --strip-bg: rgba(0, 0, 0, 0.82);
+  --font-title: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+  --font-body: Georgia, 'Times New Roman', Times, serif;
+  --font-ui: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ── Reset & Base ────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-body);
+  background: var(--sky);
+  color: var(--text-primary);
+  transition: background 1.2s ease;
+}
+
+/* ── Layout ──────────────────────────────────────────────────── */
+#app {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Particle Canvas (background layer) ─────────────────────── */
+#particle-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+#header {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  padding: 14px 20px 8px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.85), transparent);
+  flex-shrink: 0;
+}
+
+#main-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.4rem, 3.5vw, 2.8rem);
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  text-shadow: 0 0 18px rgba(255, 215, 0, 0.55), 0 2px 6px rgba(0,0,0,0.8);
+  animation: titleGlow 4s ease-in-out infinite alternate;
+}
+
+#main-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(0.75rem, 1.6vw, 1rem);
+  color: var(--text-secondary);
+  letter-spacing: 0.2em;
+  margin-top: 4px;
+  opacity: 0.85;
+}
+
+/* ── Psalm 91 Strip ──────────────────────────────────────────── */
+#psalm91-bar {
+  position: relative;
+  z-index: 10;
+  background: var(--strip-bg);
+  border-top: 1px solid rgba(255,215,0,0.25);
+  border-bottom: 1px solid rgba(255,215,0,0.25);
+  padding: 6px 24px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+#psalm91-strip {
+  font-family: var(--font-body);
+  font-size: clamp(0.7rem, 1.4vw, 0.88rem);
+  color: #d4c090;
+  font-style: italic;
+  letter-spacing: 0.03em;
+  text-align: center;
+  transition: opacity 0.6s ease;
+}
+
+#psalm91-strip.p91-fade {
+  animation: stripFade 7s ease forwards;
+}
+
+.p91-label {
+  color: var(--gold);
+  font-weight: bold;
+  font-style: normal;
+  margin-right: 8px;
+  font-size: 0.8em;
+  letter-spacing: 0.08em;
+}
+
+/* ── Main Scene Area ─────────────────────────────────────────── */
+#scene {
+  position: relative;
+  z-index: 5;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── SVG Illustration ────────────────────────────────────────── */
+#svg-stage {
+  width: 100%;
+  flex: 0 0 auto;
+  max-height: 44vh;
+  position: relative;
+  overflow: hidden;
+}
+
+#scene-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  max-height: 44vh;
+}
+
+/* ── Scene Text Panel ────────────────────────────────────────── */
+#scene-panel {
+  width: 100%;
+  max-width: 780px;
+  padding: 10px 28px 6px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+#scene-title {
+  font-family: var(--font-title);
+  font-size: clamp(1.1rem, 3vw, 1.9rem);
+  color: var(--gold);
+  text-shadow: 0 0 12px rgba(255,215,0,0.45);
+  letter-spacing: 0.07em;
+  margin-bottom: 4px;
+  animation: fadeSlideUp 0.7s ease forwards;
+}
+
+#scene-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(0.72rem, 1.5vw, 0.95rem);
+  color: var(--text-secondary);
+  font-style: italic;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  opacity: 0.88;
+}
+
+#scene-scripture {
+  font-family: var(--font-ui);
+  font-size: clamp(0.65rem, 1.2vw, 0.8rem);
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0.9;
+}
+
+#scene-narration {
+  font-family: var(--font-body);
+  font-size: clamp(0.78rem, 1.6vw, 1rem);
+  color: var(--text-primary);
+  line-height: 1.68;
+  max-width: 680px;
+  margin: 0 auto;
+  opacity: 0.92;
+  animation: fadeSlideUp 0.9s ease forwards;
+}
+
+/* ── Psalm 23 Container ──────────────────────────────────────── */
+#psalm23-container {
+  display: none;
+  max-width: 660px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  text-align: center;
+  animation: fadeSlideUp 1s ease forwards;
+}
+
+#psalm23-title {
+  font-family: var(--font-title);
+  font-size: clamp(0.9rem, 2vw, 1.3rem);
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin-bottom: 10px;
+  text-shadow: 0 0 8px rgba(255,215,0,0.5);
+}
+
+#psalm23-text {
+  text-align: left;
+  max-height: 28vh;
+  overflow-y: auto;
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
+.psalm23-verse {
+  font-family: var(--font-body);
+  font-size: clamp(0.76rem, 1.4vw, 0.92rem);
+  color: var(--text-primary);
+  line-height: 1.7;
+  margin-bottom: 6px;
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.psalm23-verse.verse-appear {
+  animation: verseAppear 0.9s ease forwards;
+}
+
+.psalm23-verse sup {
+  color: var(--gold);
+  font-size: 0.75em;
+  margin-right: 4px;
+  vertical-align: super;
+}
+
+/* ── Progress & Controls ─────────────────────────────────────── */
+#controls {
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+  padding: 8px 20px 12px;
+  background: linear-gradient(to top, rgba(0,0,0,0.88), transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+#progress-track {
+  width: 100%;
+  max-width: 600px;
+  height: 3px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+#progress-bar {
+  height: 100%;
+  background: linear-gradient(to right, var(--accent), var(--gold));
+  width: 7.69%; /* 1/13 */
+  transition: width 0.6s ease;
+  border-radius: 2px;
+}
+
+#btn-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ctrl-btn {
+  font-family: var(--font-ui);
+  font-size: clamp(0.75rem, 1.4vw, 0.88rem);
+  padding: 7px 22px;
+  border: 1px solid rgba(255,215,0,0.4);
+  border-radius: 4px;
+  background: rgba(0,0,0,0.6);
+  color: var(--gold);
+  cursor: pointer;
+  letter-spacing: 0.08em;
+  transition: background 0.25s, border-color 0.25s, transform 0.15s;
+  user-select: none;
+}
+
+.ctrl-btn:hover:not(:disabled) {
+  background: rgba(255,215,0,0.12);
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+.ctrl-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.ctrl-btn.playing {
+  background: rgba(255, 160, 0, 0.2);
+  border-color: #ffa500;
+  color: #ffa500;
+}
+
+#scene-counter {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.15em;
+  opacity: 0.7;
+}
+
+/* ── Scene Transition Animations ────────────────────────────── */
+#scene.scene-exit {
+  animation: sceneExit 0.4s ease forwards;
+  pointer-events: none;
+}
+
+#scene.scene-enter {
+  animation: sceneEnter 0.8s ease forwards;
+}
+
+/* ── Keyframes ───────────────────────────────────────────────── */
+@keyframes titleGlow {
+  from { text-shadow: 0 0 18px rgba(255,215,0,0.4), 0 2px 6px rgba(0,0,0,0.8); }
+  to   { text-shadow: 0 0 32px rgba(255,215,0,0.75), 0 0 60px rgba(255,165,0,0.3), 0 2px 6px rgba(0,0,0,0.8); }
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes verseAppear {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes stripFade {
+  0%   { opacity: 0; }
+  12%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+@keyframes sceneExit {
+  from { opacity: 1; transform: scale(1) translateY(0); }
+  to   { opacity: 0; transform: scale(0.97) translateY(-12px); }
+}
+
+@keyframes sceneEnter {
+  from { opacity: 0; transform: scale(1.02) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes psalm-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.psalm-fade-in {
+  animation: psalm-fade-in 1.2s ease forwards;
+}
+
+/* ── Cinematic Film-Grain Overlay ────────────────────────────── */
+#grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 256px 256px;
+  mix-blend-mode: overlay;
+  animation: grainShift 0.18s steps(1) infinite;
+}
+
+@keyframes grainShift {
+  0%  { background-position: 0px 0px; }
+  25% { background-position: -64px 32px; }
+  50% { background-position: 128px -64px; }
+  75% { background-position: -32px 128px; }
+}
+
+/* ── Vignette ────────────────────────────────────────────────── */
+#vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99;
+  background: radial-gradient(ellipse at center,
+    transparent 55%,
+    rgba(0,0,0,0.55) 100%);
+}
+
+/* ── Scrollbar styling ───────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+/* ── Responsive tweaks ───────────────────────────────────────── */
+@media (max-width: 600px) {
+  #scene-panel { padding: 8px 14px 4px; }
+  #psalm91-bar { padding: 5px 12px; }
+  #controls { padding: 6px 12px 10px; }
+  .ctrl-btn { padding: 6px 14px; }
+  #svg-stage { max-height: 38vh; }
+}
+
+@media (max-height: 600px) {
+  #svg-stage { max-height: 32vh; }
+  #scene-narration { font-size: 0.78rem; }
+}
