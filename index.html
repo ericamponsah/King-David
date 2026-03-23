@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>King David — A Cinematic Animation</title>
+  <meta name="description" content="An HD cinematic animation of the life of King David: shepherd boy, giant-slayer, hunted fugitive, and crowned king of Israel. Featuring Psalm 23 and Psalm 91." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- Cinematic overlays -->
+<div id="vignette" aria-hidden="true"></div>
+<div id="grain-overlay" aria-hidden="true"></div>
+
+<!-- Particle / starfield canvas -->
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<!-- Main application shell -->
+<div id="app" role="main">
+
+  <!-- ── Header ────────────────────────────────────────────── -->
+  <header id="header" aria-label="Animation title">
+    <h1 id="main-title">✦ KING DAVID ✦</h1>
+    <p id="main-subtitle">From the Wilderness to the Throne of Israel</p>
+  </header>
+
+  <!-- ── Psalm 91 Rolling Voice-Over Strip ─────────────────── -->
+  <div id="psalm91-bar" role="marquee" aria-live="polite" aria-label="Psalm 91 voice-over narration">
+    <div id="psalm91-strip">
+      <span class="p91-label">Psalm 91:1</span>
+      He who dwells in the secret place of the Most High shall abide under the shadow of the Almighty.
+    </div>
+  </div>
+
+  <!-- ── Scene Container ───────────────────────────────────── -->
+  <section id="scene" aria-label="Current scene">
+
+    <!-- SVG Illustration Stage -->
+    <div id="svg-stage" aria-hidden="true">
+      <svg id="scene-svg"
+           xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 0 900 420"
+           role="img"
+           aria-label="Scene illustration"></svg>
+    </div>
+
+    <!-- Scene Text Panel -->
+    <div id="scene-panel">
+      <h2 id="scene-title">The Fields of Bethlehem</h2>
+      <p id="scene-subtitle">A story of a boy forgotten by the world — but not by God.</p>
+      <p id="scene-scripture">Psalm 91:1</p>
+      <p id="scene-narration">
+        In the rolling hills outside Bethlehem, while his older brothers feasted in Jesse's house,
+        a young boy named David watched over his father's flock beneath a vast, indifferent sky.
+      </p>
+
+      <!-- Psalm 23 overlay (shown on throne scene) -->
+      <div id="psalm23-container" aria-live="polite" aria-label="Psalm 23 recitation">
+        <h3 id="psalm23-title">✦ Psalm 23 — The Shepherd King ✦</h3>
+        <div id="psalm23-text"></div>
+      </div>
+    </div>
+
+  </section><!-- /scene -->
+
+  <!-- ── Controls ──────────────────────────────────────────── -->
+  <nav id="controls" aria-label="Scene navigation">
+    <div id="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="8">
+      <div id="progress-bar"></div>
+    </div>
+    <div id="btn-row">
+      <button id="btn-prev" class="ctrl-btn" aria-label="Previous scene">← Prev</button>
+      <button id="btn-play" class="ctrl-btn" aria-label="Toggle auto-play">▶ Auto-Play</button>
+      <button id="btn-next" class="ctrl-btn" aria-label="Next scene">Next →</button>
+    </div>
+    <span id="scene-counter" aria-live="polite">1 / 13</span>
+  </nav>
+
+</div><!-- /app -->
+
+<script src="script.js"></script>
+</body>
+</html>
